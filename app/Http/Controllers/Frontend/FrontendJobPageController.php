@@ -81,11 +81,11 @@ class FrontendJobPageController extends Controller
 
     function applyJob(string $id) {
         if(!auth()->check()) {
-            throw ValidationException::withMessages(['Please login for apply to the job.']);
+            throw ValidationException::withMessages(['Vui lòng đăng nhập để ứng tuyển.']);
         }
         $alreadyApplied = AppliedJob::where(['job_id' => $id, 'candidate_id' => auth()->user()?->id])->exists();
         if($alreadyApplied) {
-            throw ValidationException::withMessages(['You already applied to this job.']);
+            throw ValidationException::withMessages(['Bạn đã nộp đơn xin việc này.']);
         }
 
         $applyJob = new AppliedJob();
@@ -93,6 +93,6 @@ class FrontendJobPageController extends Controller
         $applyJob->candidate_id = auth()->user()->id;
         $applyJob->save();
 
-        return response(['message' => 'Applied Successfully!'], 200);
+        return response(['message' => 'Ứng tuyển thành công!'], 200);
     }
 }
